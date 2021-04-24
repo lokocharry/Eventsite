@@ -1,0 +1,21 @@
+<p-toast [style]="{'top': '10%'}"></p-toast>
+
+<p-confirmPopup></p-confirmPopup>
+
+<p-blockUI [blocked]="bloqueado">
+	<i class="pi pi-spin pi-spinner" style="font-size: 3em; position: absolute;top: 40%; left: 45%; color: #ffcb04;"></i>
+	<div style="position: absolute;top: 50%; left: 43%; color: #ffcb04;">{{ textoBloqueo }}</div>
+</p-blockUI>
+
+<div class="p-grid">
+	<div class="p-col-12">
+		<p-menubar [model]="items">
+			<ng-template pTemplate="start">
+				<a routerLink="/"><img src="favicon.ico" class="p-mr-2"></a>
+			</ng-template>
+		</p-menubar>
+	</div>
+	<div class="p-col-12">
+		<router-outlet></router-outlet>
+	</div>
+</div>

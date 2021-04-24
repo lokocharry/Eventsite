@@ -1,0 +1,115 @@
+<h3>Restaurantes</h3>
+
+<p-dialog [modal]="true" [(visible)]="mostarDialogoCrear" [style]="{width: '50vw'}">
+	<div novalidate [formGroup]="form">
+		<p-card header="Guardar Restaurante">
+			<div class="p-fluid">
+				<div class="p-field">
+					<label for="name">Nombre</label>
+					<input id="name" type="text" pInputText formControlName="name"/>
+					<div *ngIf="form.controls['name'].invalid && (form.controls['name'].dirty || form.controls['name'].touched)">
+						<div *ngIf="form.controls['name'].errors.required">
+							<p-message severity="error" text="Nombre: Campo requerido" styleClass="p-mr-2"></p-message>
+						</div>
+						<div *ngIf="form.controls['name'].errors.minlength">
+							<p-message severity="error" text="Nombre: Mínimo {{ form.controls['name'].errors.minlength.requiredLength }} caracteres" styleClass="p-mr-2"></p-message>
+						</div>
+					</div>
+				</div>
+				<div class="p-field">
+					<label for="service_delivery">Domicilios activos</label>
+					<br>
+					<p-inputSwitch formControlName="service_delivery"></p-inputSwitch>
+				</div>
+				<div class="p-field">
+					<label for="service_take_away">Servicio para llevar activo</label>
+					<br>
+					<p-inputSwitch formControlName="service_take_away"></p-inputSwitch>
+				</div>
+				<div class="p-field">
+					<label for="service_book">Reservas activas</label>
+					<br>
+					<p-inputSwitch formControlName="service_book"></p-inputSwitch>
+				</div>
+				<div class="p-field">
+					<label for="service_table">Servicio en mesa activo</label>
+					<br>
+					<p-inputSwitch formControlName="service_table"></p-inputSwitch>
+				</div>
+				<div class="p-field">
+					<label for="number_of_branches">Número de sucursales</label>
+					<p-inputNumber formControlName="number_of_branches"></p-inputNumber>
+					<div *ngIf="form.controls['number_of_branches'].invalid && (form.controls['number_of_branches'].dirty || form.controls['number_of_branches'].touched)">
+						<div *ngIf="form.controls['number_of_branches'].errors.required">
+							<p-message severity="error" text="Número de sucursales: Campo requerido" styleClass="p-mr-2"></p-message>
+						</div>
+					</div>
+				</div>
+				<div class="p-field">
+					<label for="address">Dirección</label>
+					<input id="address" type="text" pInputText formControlName="address"/>
+				</div>
+			</div>
+		</p-card>
+		<br>
+		<p-button label="Guardar" [disabled]="!form.valid" (onClick)="guardarRestaurante();"></p-button>
+	</div>
+</p-dialog>
+
+<p-dialog [modal]="true" [(visible)]="mostarDialogoDetalle" [style]="{width: '50vw'}">
+	<div>
+		<p-card header="Detalle Restaurante">
+			<div class="p-fluid">
+				<div class="p-field">
+					<label for="name"><b>Nombre:</b> {{ restaurante?.name }}</label>
+				</div>
+				<div class="p-field">
+					<label for="service_delivery"><b>Domicilios activos:</b> &nbsp; <i style="font-size: 1.5rem" class="{{ restaurante?.service_delivery ? 'pi pi-check' : 'pi pi-times p-button-danger' }}" [ngStyle]="{color: restaurante?.service_delivery ? 'var(--green-500)' : 'var(--pink-500)'}"></i></label>
+				</div>
+				<div class="p-field">
+					<label for="service_take_away"><b>Servicio para llevar activo:</b> &nbsp; <i style="font-size: 1.5rem" class="{{ restaurante?.service_take_away ? 'pi pi-check' : 'pi pi-times p-button-danger' }}" [ngStyle]="{color: restaurante?.service_take_away ? 'var(--green-500)' : 'var(--pink-500)'}"></i></label>
+				</div>
+				<div class="p-field">
+					<label for="service_book"><b>Reservas activas:</b> &nbsp; <i style="font-size: 1.5rem" class="{{ restaurante?.service_book ? 'pi pi-check' : 'pi pi-times p-button-danger' }}" [ngStyle]="{color: restaurante?.service_book ? 'var(--green-500)' : 'var(--pink-500)'}"></i></label>
+				</div>
+				<div class="p-field">
+					<label for="service_table"><b>Servicio en mesa activo:</b> &nbsp; <i style="font-size: 1.5rem" class="{{ restaurante?.service_table ? 'pi pi-check' : 'pi pi-times p-button-danger' }}" [ngStyle]="{color: restaurante?.service_table ? 'var(--green-500)' : 'var(--pink-500)'}"></i></label>
+				</div>
+				<div class="p-field">
+					<label for="number_of_branches"><b>Número de sucursales:</b> {{ restaurante?.number_of_branches }}</label>
+				</div>
+				<div class="p-field">
+					<label for="address"><b>Dirección:</b> {{ restaurante?.address }}</label>
+				</div>
+			</div>
+		</p-card>
+	</div>
+</p-dialog>
+
+<p-table [value]="restaurantes" [paginator]="true" [rows]="10" [loading]="cargando">
+	<ng-template pTemplate="header">
+		<tr>
+			<th>Nombre</th>
+			<th>Dirección</th>
+			<th>Sucursales</th>
+			<th>Acciones</th>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="body" let-restaurante>
+		<tr>
+			<td>{{ restaurante.name }}</td>
+			<td>{{ restaurante.address }}</td>
+			<td>{{ restaurante.number_of_branches }}</td>
+			<td>
+				<p-button icon="pi pi-search" styleClass="p-button-raised p-button-success" (onClick)="abrirDialogoDetalle(restaurante);"></p-button>
+				&nbsp;
+				<p-button icon="pi pi-pencil" styleClass="p-button-raised p-button-info" (onClick)="abrirDialogoFormulario('PUT', restaurante);"></p-button>
+				&nbsp;
+				<p-button icon="pi pi-trash" styleClass="p-button-raised p-button-danger" (onClick)="confirmatEliminarRestaurante($event, restaurante);"></p-button>
+			</td>
+		</tr>
+	</ng-template>
+	<ng-template pTemplate="footer" >
+		<p-button icon="pi pi-plus" (onClick)="abrirDialogoFormulario('POST');"></p-button>
+	</ng-template>
+</p-table>

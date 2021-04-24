@@ -1,0 +1,128 @@
+<div novalidate [formGroup]="form">
+	<p-card header="Crear Cliente">
+		<p-card header="Datos del Cliente">
+			<div class="p-fluid" formGroupName="user">
+				<div class="p-field">
+					<label for="first_name">Nombres</label>
+					<input id="first_name" type="text" pInputText formControlName="first_name">
+					<div *ngIf="form.get('user')['controls'].first_name.invalid && (form.get('user')['controls'].first_name.dirty || form.get('user')['controls'].first_name.touched)">
+						<div *ngIf="form.get('user')['controls'].first_name.errors.required">
+							<p-message severity="error" text="Nombres: Campo requerido" styleClass="p-mr-2"></p-message>
+						</div>
+						<div *ngIf="form.get('user')['controls'].first_name.errors.minlength">
+							<p-message severity="error" text="Nombres: Mínimo {{ form.get('user')['controls'].first_name.errors.minlength.requiredLength }} caracteres" styleClass="p-mr-2"></p-message>
+						</div>
+					</div>
+				</div>
+				<div class="p-field">
+					<label for="last_name">Apellidos</label>
+					<input id="last_name" type="text" pInputText formControlName="last_name">
+					<div *ngIf="form.get('user')['controls'].last_name.invalid && (form.get('user')['controls'].last_name.dirty || form.get('user')['controls'].last_name.touched)">
+						<div *ngIf="form.get('user')['controls'].last_name.errors.required">
+							<p-message severity="error" text="Apellidos: Campo requerido" styleClass="p-mr-2"></p-message>
+						</div>
+						<div *ngIf="form.get('user')['controls'].last_name.errors.minlength">
+							<p-message severity="error" text="Apellidos: Mínimo {{ form.get('user')['controls'].last_name.errors.minlength.requiredLength }} caracteres" styleClass="p-mr-2"></p-message>
+						</div>
+					</div>
+				</div>
+				<div class="p-field">
+					<label for="email">Email</label>
+					<input id="email" type="text" pInputText formControlName="email">
+					<div *ngIf="form.get('user')['controls'].email.invalid && (form.get('user')['controls'].email.dirty || form.get('user')['controls'].email.touched)">
+						<div *ngIf="form.get('user')['controls'].email.errors.required">
+							<p-message severity="error" text="Email Campo requerido" styleClass="p-mr-2"></p-message>
+						</div>
+						<div *ngIf="form.get('user')['controls'].email.errors.email">
+							<p-message severity="error" text="Email: Formato inválido" styleClass="p-mr-2"></p-message>
+						</div>
+					</div>
+				</div>
+				<div class="p-field">
+					<label for="password">Contraseña</label>
+					<p-password formControlName="password" promptLabel="Ingrese una contraseña" weakLabel="Débil" mediumLabel="Regular" strongLabel="Fuerte"></p-password>
+					<div *ngIf="form.get('user')['controls'].password.invalid && (form.get('user')['controls'].password.dirty || form.get('user')['controls'].password.touched)">
+						<div *ngIf="form.get('user')['controls'].password.errors.required">
+							<p-message severity="error" text="Contraseña: Campo requerido" styleClass="p-mr-2"></p-message>
+						</div>
+						<div *ngIf="form.get('user')['controls'].password.errors.minlength">
+							<p-message severity="error" text="Contraseña: Mínimo {{ form.get('user')['controls'].password.errors.minlength.requiredLength }} caracteres" styleClass="p-mr-2"></p-message>
+						</div>
+					</div>
+				</div>
+				<div class="p-field">
+					<label for="phone">Teléfono</label>
+					<input id="phone" type="text" pInputText formControlName="phone">
+				</div>
+			</div>
+		</p-card>
+		<br>
+		<p-card header="Datos del Restaurante">
+			<div class="p-fluid" formGroupName="customer">
+				<div class="p-field">
+					<label for="name">Nombre</label>
+					<input id="name" type="text" pInputText formControlName="name">
+					<div *ngIf="form.get('customer')['controls'].name.invalid && (form.get('customer')['controls'].name.dirty || form.get('customer')['controls'].name.touched)">
+						<div *ngIf="form.get('customer')['controls'].name.errors.required">
+							<p-message severity="error" text="Nombre: Campo requerido" styleClass="p-mr-2"></p-message>
+						</div>
+						<div *ngIf="form.get('customer')['controls'].name.errors.minlength">
+							<p-message severity="error" text="Nombre: Mínimo {{ form.get('customer')['controls'].name.errors.minlength.requiredLength }} caracteres" styleClass="p-mr-2"></p-message>
+						</div>
+					</div>
+				</div>
+				<div class="p-field">
+					<label for="service_delivery">Domicilios activos</label>
+					<br>
+					<p-inputSwitch formControlName="service_delivery"></p-inputSwitch>
+				</div>
+				<div class="p-field">
+					<label for="service_take_away">Servicio para llevar activo</label>
+					<br>
+					<p-inputSwitch formControlName="service_take_away"></p-inputSwitch>
+				</div>
+				<div class="p-field">
+					<label for="service_book">Reservas activas</label>
+					<br>
+					<p-inputSwitch formControlName="service_book"></p-inputSwitch>
+				</div>
+				<div class="p-field">
+					<label for="service_table">Servicio en mesa activo</label>
+					<br>
+					<p-inputSwitch formControlName="service_table"></p-inputSwitch>
+				</div>
+				<div class="p-field">
+					<label for="number_of_branches">Número de sucursales</label>
+					<p-inputNumber formControlName="number_of_branches"></p-inputNumber>
+					<div *ngIf="form.get('customer')['controls'].number_of_branches.invalid && (form.get('customer')['controls'].number_of_branches.dirty || form.get('customer')['controls'].number_of_branches.touched)">
+						<div *ngIf="form.get('customer')['controls'].number_of_branches.errors.required">
+							<p-message severity="error" text="Número de sucursales: Campo requerido" styleClass="p-mr-2"></p-message>
+						</div>
+					</div>
+				</div>
+			</div>
+		</p-card>
+		<br>
+		<p-card header="Ubicación">
+			<div class="p-fluid">
+				<div class="p-fluid">
+					<p-gmap [options]="options" [overlays]="overlays" [style]="{'width':'100%','height':'520px'}" (onMapClick)="handleMapClick($event)"></p-gmap>
+				</div>
+				<div class="p-field" formGroupName="location">
+					<label for="address">Dirección</label>
+					<input id="address" type="text" pInputText formControlName="address">
+				</div>
+				<div class="p-field" formGroupName="city">
+					<label for="city_long_name">Ciudad</label>
+					<input id="city_long_name" type="text" pInputText formControlName="long_name" readonly="readonly">
+				</div>
+				<div class="p-field" formGroupName="country">
+					<label for="country_long_name">Pais</label>
+					<input id="country_long_name" type="text" pInputText formControlName="long_name" readonly="readonly">
+				</div>
+			</div>
+		</p-card>
+	</p-card>
+</div>
+<br>
+<p-button label="Guardar" [disabled]="!form.valid" (onClick)="guardarRestaurante()"></p-button>
